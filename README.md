@@ -12,4 +12,4 @@ it contains three parts :
 3- comming soon ...
 
 download:
-https://github.com/blacknose-rooster/utask/raw/master/app/release/app-release.apk
+https://github.com/blacknose-rooster/utask/raw/master/app/release/utask.apk
