@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback, AddDial
     companion object {
         private val USERNAME = "username"
         private val PASSWORD = "password"
-        private val VERSION = 1
+        private val VERSION = 2
         private val GITHUB_URL = "https://github.com/blacknose-rooster/utask"
 
         fun editPreferences(context: Context, username:String, password:String){
