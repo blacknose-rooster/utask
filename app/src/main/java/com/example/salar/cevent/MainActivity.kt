@@ -92,21 +92,10 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback, AddDial
         else show_username.text = getUsername(this)
 
         updateVolume()
-        if(isInternetAvailable())updateCheck()
+
+        updateCheck()
 
         if(firstLunch()) registerReminder()
-    }
-
-    fun isInternetAvailable(): Boolean {
-        try {
-            val ipAddr = InetAddress.getByName("google.com")
-            //You can replace it with your name
-            return !ipAddr.equals("")
-
-        } catch (e: Exception) {
-            return false
-        }
-
     }
 
     private fun firstLunch():Boolean {
@@ -121,17 +110,19 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback, AddDial
     private fun updateCheck() {
         queue.add(getUpdateCheckRequest())
     }
+
     val responseListener = Response.Listener<String> {
         response ->
-
-        Log.d("update_check",response.toString())
-        val jsonObject = JSONObject(response.toString())
-        if(Integer.parseInt(jsonObject.getString("update"))> VERSION){
-            val url = jsonObject.getString("link")
-            val u = UpdateDialog(this)
-            u.url=url
-            u.show()
+        if(response.contains("blacknose-rooster")){
+            val jsonObject = JSONObject(response.toString())
+            if(Integer.parseInt(jsonObject.getString("update"))> VERSION){
+                val url = jsonObject.getString("link")
+                val u = UpdateDialog(this)
+                u.url=url
+                u.show()
+            }
         }
+
 
     }
     val errorListener = Response.ErrorListener {
