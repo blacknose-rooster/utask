@@ -1,13 +1,11 @@
-package com.example.salar.cevent
+package com.example.salar.cevent.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
+import com.example.salar.cevent.R
 import kotlinx.android.synthetic.main.contact_us.*
-import kotlinx.android.synthetic.main.dialog_add.*
 
 /**
  * Created by salar on 5/12/18.

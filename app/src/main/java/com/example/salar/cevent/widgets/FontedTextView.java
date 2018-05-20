@@ -1,4 +1,4 @@
-package com.example.salar.cevent;
+package com.example.salar.cevent.widgets;
 
 import android.content.Context;
 import android.graphics.Typeface;

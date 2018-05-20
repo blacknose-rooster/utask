@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -17,12 +16,17 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.salar.cevent.dialogs.AddDialog
+import com.example.salar.cevent.dialogs.ContactUsDialog
+import com.example.salar.cevent.dialogs.UpdateDialog
+import com.example.salar.cevent.receivers.Receiver
+import com.example.salar.cevent.widgets.FontedTextView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
-import org.jsoup.helper.HttpConnection
+import java.net.InetAddress
 import java.util.*
 
-class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback,AddDialog.Callback, View.OnClickListener {
+class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback, AddDialog.Callback, View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             main_contact_us.id -> {
@@ -34,13 +38,14 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback,AddDialo
                 startActivity(browserIntent)
             }
             main_add_account.id -> {
-                var dialog =AddDialog(this,this)
+                var dialog = AddDialog(this, this)
                 dialog.show()
             }
         }
     }
 
     override fun add(username: String, password: String) {
+        LoginService.retryCount=0
         editPreferences(this,username,password)
         show_username.text =username
         show_username.setTypefaceBold(2)
@@ -87,12 +92,22 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback,AddDialo
         else show_username.text = getUsername(this)
 
         updateVolume()
-        updateCheck()
+        if(isInternetAvailable())updateCheck()
 
         if(firstLunch()) registerReminder()
     }
 
+    fun isInternetAvailable(): Boolean {
+        try {
+            val ipAddr = InetAddress.getByName("google.com")
+            //You can replace it with your name
+            return !ipAddr.equals("")
 
+        } catch (e: Exception) {
+            return false
+        }
+
+    }
 
     private fun firstLunch():Boolean {
         val preferences : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -108,6 +123,8 @@ class MainActivity : AppCompatActivity(), RemainedVolumeLoader.Callback,AddDialo
     }
     val responseListener = Response.Listener<String> {
         response ->
+
+        Log.d("update_check",response.toString())
         val jsonObject = JSONObject(response.toString())
         if(Integer.parseInt(jsonObject.getString("update"))> VERSION){
             val url = jsonObject.getString("link")

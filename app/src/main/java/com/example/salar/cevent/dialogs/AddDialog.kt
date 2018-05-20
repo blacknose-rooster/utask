@@ -1,10 +1,11 @@
-package com.example.salar.cevent
+package com.example.salar.cevent.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import com.example.salar.cevent.MainActivity
 import com.example.salar.cevent.R
 import kotlinx.android.synthetic.main.dialog_add.*
 
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.dialog_add.*
  * Created by shayan4shayan on 1/24/18.
  * dialog for add new Account
  */
-class AddDialog(c: Context, private val callback: AddDialog.Callback) : AlertDialog(c), View.OnClickListener {
+class AddDialog(c: Context, private val callback: Callback) : AlertDialog(c), View.OnClickListener {
     /**
      * click listener for add button
      */

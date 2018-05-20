@@ -1,4 +1,4 @@
-package com.example.salar.cevent
+package com.example.salar.cevent.receivers
 
 import android.app.AlarmManager
 import android.app.PendingIntent

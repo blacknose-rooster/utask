@@ -1,18 +1,12 @@
-package com.example.salar.cevent;
+package com.example.salar.cevent.receivers;
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.wifi.WifiManager
 import android.util.Log
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.example.salar.cevent.LoginService
 
 
 /**
@@ -26,13 +20,14 @@ class WifiReceiver : BroadcastReceiver() {
     @SuppressLint("WifiManagerPotentialLeak", "UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context?, intent: Intent?) {
         this.context = context
+        LoginService.retryCount =0
         Log.d("WifiReceiver", "onReceive called")
         val manager = context?.getSystemService(Context.WIFI_SERVICE) as WifiManager
         if (manager.isWifiEnabled) {
             Log.d("WifiReceiver", "Wifi Available")
             if (!isConnecting) {
-                LoginService.retryCount=0
-                context.startService(Intent(context,LoginService::class.java))
+//                LoginService.retryCount=0
+                context.startService(Intent(context, LoginService::class.java))
             }
         } else {
             Log.d("WifiReceiver", "wifi not available")

@@ -21,13 +21,15 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".WifiReceiver">
+        <receiver android:name=".receivers.WifiReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
+                <action android:name="android.net.wifi.supplicant.STATE_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -38,7 +40,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".Receiver" />
+        <receiver android:name=".receivers.Receiver" />
 
     </application>
 
